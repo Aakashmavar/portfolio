@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Aknova Catalog</title>
+  <style>
+    :root{
+      --text:#f8fafc;
+      --muted:#cbd5e1;
+      --shadow:0 10px 30px rgba(0,0,0,.25);
+      --radius:18px;
+      --primary:#3b82f6;
+      --secondary:#22c55e;
+      --accent1:#f43f5e;
+      --accent2:#eab308;
+      --accent3:#06b6d4;
+      --accent4:#8b5cf6;
+      --accent5:#ec4899;
+      --section-dark:#0f172a;
+      --section-mid:#1e293b;
+      --section-light:#111827;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Montserrat',system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,sans-serif;line-height:1.6;background:#0f172a;color:var(--text)}
+    h1,h2,h3{margin-bottom:10px;text-align:center}
+    .container{max-width:1100px;margin:auto;padding:60px 20px;text-align:center}
+
+    header{position:relative;height:100vh;overflow:hidden;background:var(--section-mid);color:#fff;display:flex;align-items:center;justify-content:center;text-align:center}
+    .header-slides{position:relative;width:100%;height:100%;display:flex;transition:transform 1s ease-in-out}
+    .header-slide{min-width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+    .header-slide h1{font-size:4rem;font-weight:900;text-transform:uppercase;color:#fff;text-shadow:0 2px 15px rgba(0,0,0,.7)}
+    .header-slide p.tagline{font-size:1.7rem;color:var(--primary);margin-top:12px;font-weight:700;text-shadow:0 2px 10px rgba(0,0,0,.6)}
+    .header-slide p.sub{color:#e2e8f0;font-size:1.1rem;margin-top:10px}
+
+    section{padding:80px 20px;text-align:center;position:relative}
+
+    .badge{display:inline-block;background:var(--primary);color:#000;padding:16px 34px;border-radius:999px;font-weight:800;margin-bottom:35px;font-size:1.8rem;text-transform:uppercase;letter-spacing:1px;box-shadow:0 4px 15px rgba(0,0,0,.3)}
+
+    .card{border-radius:var(--radius);box-shadow:var(--shadow);padding:50px;font-size:1.4rem;transition:transform .3s ease, box-shadow .3s ease;line-height:1.9;background:rgba(255,255,255,.05);margin:auto;text-align:center;max-width:900px}
+    .card:hover{transform:translateY(-8px) scale(1.02);box-shadow:0 14px 40px rgba(0,0,0,.4)}
+
+    #about{background:var(--section-dark)}
+    #services{background:var(--section-mid)}
+    #pricing{background:var(--section-light)}
+    #reviews{background:var(--section-mid)}
+    #contact{background:var(--section-dark)}
+
+    .section-floating-text{position:absolute;top:-40px;left:50%;transform:translateX(-50%);background:var(--primary);color:#000;padding:14px 28px;border-radius:999px;font-size:1.2rem;font-weight:800;box-shadow:var(--shadow);text-transform:uppercase;text-align:center}
+
+    /* GRID SERVICES */
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:30px;justify-content:center}
+    .service-card{padding:40px;color:#fff;font-weight:600;border-radius:var(--radius);box-shadow:var(--shadow);transition:transform .3s ease, background .3s ease;cursor:pointer;position:relative;text-align:center;background:rgba(255,255,255,.05)}
+    .service-card:hover{transform:translateY(-8px) scale(1.02)}
+    .service-card i{font-size:2.6rem;margin-bottom:15px;display:block}
+    .service-card small{display:block;margin-top:10px;font-weight:400;color:#f1f5f9;font-size:1rem;line-height:1.6}
+
+    /* Assign different colors */
+    .service-card:nth-child(1){background:#3b82f6}
+    .service-card:nth-child(2){background:#f43f5e}
+    .service-card:nth-child(3){background:#22c55e}
+    .service-card:nth-child(4){background:#eab308}
+    .service-card:nth-child(5){background:#06b6d4}
+    .service-card:nth-child(6){background:#8b5cf6}
+    .service-card:nth-child(7){background:#ec4899}
+
+    .service-card i{color:#fff}
+
+    /* Responsive Fix */
+    @media(max-width:768px){
+      .header-slide h1{font-size:2.5rem}
+      .header-slide p.tagline{font-size:1.2rem}
+      .card{padding:25px;font-size:1.1rem}
+      .service-card{padding:25px;font-size:1.1rem}
+      .service-card small{font-size:0.95rem}
+      table{font-size:0.8rem}
+    }
+
+    /* Pricing Table */
+    .pricing-wrapper{overflow-x:auto;width:100%;}
+    table{min-width:600px;border-collapse:collapse;margin-top:30px;transition:transform .3s ease;margin:auto}
+    th,td{border:1px solid #334155;padding:14px 10px;text-align:center;word-wrap:break-word}
+    th{background:var(--primary);color:#fff;font-size:1rem}
+    td{background:#0f172a;color:#f8fafc;font-size:0.95rem}
+    table:hover{transform:scale(1.01)}
+
+    /* Reviews */
+    .review-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:25px;margin-top:30px;justify-content:center}
+    .review-card{background:#1e293b;padding:30px;border-radius:var(--radius);box-shadow:var(--shadow);text-align:center;transition:transform .3s ease;max-width:350px;margin:auto}
+    .review-card:hover{transform:translateY(-6px)}
+    .review-card p{font-size:1rem;line-height:1.7;color:#e2e8f0}
+    .review-card b{display:block;margin-top:10px;font-size:1.05rem;color:var(--primary)}
+    .stars{color:gold;font-size:1.2rem;margin:10px 0}
+
+    #contact p{margin:10px 0;color:#e2e8f0;text-align:center}
+    #contact a{color:#3b82f6;text-decoration:none;font-weight:600;word-break:break-word}
+    .contact-card{background:rgba(255,255,255,.07);padding:25px;border-radius:var(--radius);max-width:600px;margin:auto;text-align:center;word-wrap:break-word}
+
+    footer{background:linear-gradient(90deg,#0b1120,#1e293b);text-align:center;padding:50px 20px;color:var(--muted);border-top:3px solid var(--primary)}
+    footer p{margin:8px 0}
+    footer .thanks{margin-top:25px;color:var(--primary);font-weight:800;font-size:1.3rem}
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+  <!-- HEADER -->
+  <header>
+    <div class="header-slides" id="headerSlides">
+      <div class="header-slide">
+        <h1>Aknova Catalog</h1>
+        <p class="tagline">Your Partner in Digital Marketing Growth</p>
+        <p class="sub">SEO | Google Ads | Facebook Ads | Lead Generation | Social Media Marketing</p>
+      </div>
+      <div class="header-slide">
+        <h1>SEO</h1>
+        <p class="tagline">Boost Rankings & Organic Traffic</p>
+      </div>
+      <div class="header-slide">
+        <h1>Google Ads</h1>
+        <p class="tagline">Maximize ROI with PPC Campaigns</p>
+      </div>
+      <div class="header-slide">
+        <h1>Social Media Marketing</h1>
+        <p class="tagline">Engage & Grow Your Audience</p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ABOUT US -->
+    <section id="about">
+      <div class="section-floating-text">About Us</div>
+      <div class="container">
+        <div class="card">
+          <p><strong>Aknova Catalog</strong> is a performance-driven digital marketing agency founded by <b>Aakash Mavar</b>. With over <b>2+ years of experience</b> in SEO, Paid Ads, and Social Media, we help businesses thrive with innovative and data-backed strategies. Our mission is to deliver measurable growth, maximize ROI, and build a strong digital brand presence for clients across India and global markets.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- OUR SERVICES -->
+    <section id="services">
+      <div class="section-floating-text">Our Services</div>
+      <div class="container grid">
+        <div class="service-card"><i class="fas fa-search"></i>SEO Optimization (Basic)<small>Keyword research, on-page & off-page SEO strategies, site audits, backlink building, and content optimization for higher search rankings & visibility.</small></div>
+        <div class="service-card"><i class="fab fa-facebook"></i>Facebook & Instagram Ads<small>Advanced targeting, creative ad design, A/B testing, and campaign scaling for maximum ROI across social platforms.</small></div>
+        <div class="service-card"><i class="fab fa-google"></i>Google Ads Management<small>ROI-driven PPC campaigns, conversion tracking, remarketing, and performance optimization for sustainable results.</small></div>
+        <div class="service-card"><i class="fas fa-share-alt"></i>Social Media Management<small>Content calendars, post scheduling, engagement strategies, and influencer collaborations to grow your brand online.</small></div>
+        <div class="service-card"><i class="fas fa-bullseye"></i>Lead Generation Campaigns<small>Multi-channel lead funnels, landing page optimization, CRM integration, and automation to convert leads into clients.</small></div>
+        <div class="service-card"><i class="fas fa-chart-line"></i>Analytics & Reporting<small>Monthly performance dashboards, detailed KPIs, actionable insights, and recommendations for continued growth.</small></div>
+        <div class="service-card"><i class="fas fa-rocket"></i>Complete Marketing Package<small>All-in-one package combining SEO, Paid Ads, Social Media, Lead Generation & Analytics for total digital growth.</small></div>
+      </div>
+    </section>
+
+    <!-- PRICING -->
+    <section id="pricing">
+      <div class="section-floating-text">Pricing</div>
+      <div class="container pricing-wrapper">
+        <table>
+          <tr><th>Service</th><th>India (INR)</th><th>International (USD)</th></tr>
+          <tr><td>SEO Optimization (Basic)</td><td>₹5,000</td><td>$70</td></tr>
+          <tr><td><b>Facebook & Instagram Ads Management</b></td><td><b>₹10,000</b></td><td><b>$120</b></td></tr>
+          <tr><td>Google Ads Management</td><td>₹8,000</td><td>$120</td></tr>
+          <tr><td>Social Media Management (2 Pages)</td><td>₹6,000</td><td>$90</td></tr>
+          <tr><td>Lead Generation Campaigns</td><td>₹7,000</td><td>$100</td></tr>
+          <tr><td>Analytics & Reporting (Monthly)</td><td>₹3,000</td><td>$50</td></tr>
+          <tr><td><b>Complete Digital Marketing Package</b></td><td><b>₹15,000</b></td><td><b>$220</b></td></tr>
+        </table>
+      </div>
+    </section>
+
+    <!-- REVIEWS -->
+    <section id="reviews">
+      <div class="section-floating-text">Client Reviews</div>
+      <div class="container">
+        <div class="review-grid">
+          <div class="review-card">
+            <div class="stars">⭐⭐⭐⭐⭐</div>
+            <p>“Aknova Catalog transformed our SEO strategy and doubled organic traffic.”</p>
+            <b>Rohit Sharma</b>
+          </div>
+          <div class="review-card">
+            <div class="stars">⭐⭐⭐⭐⭐</div>
+            <p>“Amazing ROI from Google Ads. Highly recommend working with Aknova Catalog.”</p>
+            <b>Anjali Mehta</b>
+          </div>
+          <div class="review-card">
+            <div class="stars">⭐⭐⭐⭐⭐</div>
+            <p>“Social Media campaigns brought us real engagement & boosted sales.”</p>
+            <b>Vikram Singh</b>
+          </div>
+          <div class="review-card">
+            <div class="stars">⭐⭐⭐⭐</div>
+            <p>“Their analytics reports helped us make smarter business decisions.”</p>
+            <b>Priya Nair</b>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT US -->
+    <section id="contact">
+      <div class="section-floating-text">Contact Us</div>
+      <div class="container">
+        <div class="contact-card">
+          <p><b>Phone/WhatsApp:</b> <a href="tel:+917024841463">+91 7024841463</a></p>
+          <p><b>Email:</b> <a href="mailto:aakashmavar6@gmail.com">aakashmavar6@gmail.com</a></p>
+          <p><b>Portfolio:</b> <a href="https://github.com/Aakashmavar/pyihongit" target="_blank">github.com/Aakashmavar/pyihongit</a></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p><strong>Aknova Catalog</strong></p>
+    <p>Indore, Madhya Pradesh, India — PIN 452001</p>
+    <p>Phone: +91 7024841463 | Email: aakashmavar6@gmail.com</p>
+    <p class="thanks">🌟 Thank you for trusting Aknova Catalog with your digital journey! 🌟</p>
+  </footer>
+
+  <script>
+    // Header auto slideshow
+    let hIndex = 0;
+    const hSlides = document.getElementById('headerSlides');
+    const hTotal = hSlides.children.length;
+    setInterval(()=>{
+      hIndex = (hIndex+1) % hTotal;
+      hSlides.style.transform = `translateX(-${hIndex*100}%)`;
+    },3000);
+  </script>
+</body>
+</html>
